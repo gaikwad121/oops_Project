@@ -3,12 +3,10 @@ import java.util.*;
 
 public class ATM_Machine_Project {
 
-    // Instance variable for balance
     int balance = 789056431;
 
-    // Method for menu operations
-    void Menu(String choice, int deposit) {
-        switch (choice.toLowerCase()) {
+    void Menu(String choice, int deposit, int withdraw) {
+        switch(choice.toLowerCase()) {
             case "balance":
                 System.out.println("Your available balance is " + balance);
                 break;
@@ -17,6 +15,16 @@ public class ATM_Machine_Project {
                 balance += deposit;
                 System.out.println("Money deposited: " + deposit);
                 System.out.println("Available balance after deposit: " + balance);
+                break;
+
+            case "withdraw":
+                if(withdraw <= balance) {
+                    balance -= withdraw;
+                    System.out.println("Money withdrawn: " + withdraw);
+                    System.out.println("Available balance after withdrawal: " + balance);
+                } else {
+                    System.out.println("Insufficient balance! Your available balance is: " + balance);
+                }
                 break;
 
             case "exit":
@@ -30,7 +38,7 @@ public class ATM_Machine_Project {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        ATM_Machine_Project atm = new ATM_Machine_Project(); // creating object
+        ATM_Machine_Project atm = new ATM_Machine_Project();
 
         System.out.println("Enter your PIN:");
         String pass = s.nextLine();
@@ -38,18 +46,24 @@ public class ATM_Machine_Project {
         if(pass.equals("jyoti@123")) {
             System.out.println("Welcome to our ATM!");
 
-            while(true) { // loop for multiple operations
-                System.out.println("Select your choice (balance/deposit/exit):");
+            while(true) {
+                System.out.println("Select your choice (balance/deposit/withdraw/exit):");
                 String choice = s.nextLine();
 
                 int deposit = 0;
+                int withdraw = 0;
+
                 if(choice.equalsIgnoreCase("deposit")) {
                     System.out.println("Enter amount to deposit:");
                     deposit = s.nextInt();
                     s.nextLine(); // consume leftover newline
+                } else if(choice.equalsIgnoreCase("withdraw")) {
+                    System.out.println("Enter amount to withdraw:");
+                    withdraw = s.nextInt();
+                    s.nextLine(); // consume leftover newline
                 }
 
-                atm.Menu(choice, deposit);
+                atm.Menu(choice, deposit, withdraw);
 
                 if(choice.equalsIgnoreCase("exit")) {
                     break;
